@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Full-Screen Responsive Image Slider</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap");
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lexend", sans-serif;
+      background-color: #362a2b;
+      color: #e5ebf3;
+      overflow: hidden; /* Hide scrollbars */
+    }
+
+    .slider {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Maintain aspect ratio and fit within the slide */
+    }
+
+    .slide.current {
+      opacity: 1;
+    }
+
+    .buttons {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .buttons button {
+      border: 2px solid #e5ebf3;
+      background-color: transparent;
+      color: #e5ebf3;
+      cursor: pointer;
+      padding: 13px 15px;
+      border-radius: 50%;
+      outline: none;
+    }
+
+    .buttons button:hover {
+      background-color: #e5ebf3;
+      color: #362a2b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider">
+    <div class="slide current">
+      <img src="1.png" alt="Image 1">
+    </div>
+    <div class="slide">
+      <img src="2.png" alt="Image 2">
+    </div>
+    <div class="slide">
+      <img src="3.png" alt="Image 3">
+    </div>
+    <div class="slide">
+      <img src="4.png" alt="Image 4">
+    </div>
+    <div class="slide">
+      <img src="5.png" alt="Image 5">
+    </div>
+    <div class="slide">
+      <img src="6.png" alt="Image 6">
+    </div>
+    <div class="slide">
+      <img src="7.png" alt="Image 7">
+    </div>
+    <div class="slide">
+      <img src="8.png" alt="Image 8">
+    </div>
+    <div class="slide">
+      <img src="9.png" alt="Image 9">
+    </div>
+    <div class="slide">
+      <img src="10.png" alt="Image 10">
+    </div>
+  </div>
+  <div class="buttons">
+    <button id="prev"><i class="fas fa-arrow-left"></i></button>
+    <button id="next"><i class="fas fa-arrow-right"></i></button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const nextButton = document.getElementById("next");
+    const prevButton = document.getElementById("prev");
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let slideInterval;
+
+    const showSlide = (index) => {
+      slides.forEach((slide) => {
+        slide.classList.remove("current");
+      });
+      slides[index].classList.add("current");
+    };
+
+    const nextSlide = () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    };
+
+    const prevSlide = () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    };
+
+    nextButton.addEventListener("click", () => {
+      nextSlide();
+      clearInterval(slideInterval); // Reset interval on button click
+      slideInterval = setInterval(nextSlide, 6000); // Restart interval
+    });
+
+    prevButton.addEventListener("click", () => {
+      prevSlide();
+      clearInterval(slideInterval); // Reset interval on button click
+      slideInterval = setInterval(nextSlide, 6000); // Restart interval
+    });
+
+    // Auto slide every 6 seconds
+    slideInterval = setInterval(nextSlide, 6000);
+  </script>
+</body>
+
+</html>
